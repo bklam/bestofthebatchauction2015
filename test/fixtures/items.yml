@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  donated_by: MyString
+  starting_price: 9.99
+  current_price: 9.99
+  min_increment: 9.99
+  status_id: 1
+
+two:
+  name: MyString
+  description: MyString
+  donated_by: MyString
+  starting_price: 9.99
+  current_price: 9.99
+  min_increment: 9.99
+  status_id: 1
