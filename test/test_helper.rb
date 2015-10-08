@@ -4,8 +4,11 @@ SimpleCov.start 'rails'
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'contexts'
 
 class ActiveSupport::TestCase
+  include Contexts
+
   # Prof. H's deny method to improve readability of tests
   def deny(condition, msg="")
     # a simple transformation to increase readability IMO
