@@ -41,10 +41,11 @@ namespace :db do
         item.name = Faker::Commerce.product_name
         item.description = Faker::Company.catch_phrase
         item.donated_by = Faker::Company.name
+        item.value = rand(50..100)
         item.starting_price = Faker::Number.decimal(2)
         item.current_price = item.starting_price + rand(0..4)
         item.min_increment = (rand(0.01..5.00) * 100).round / 100.0
-        item.status_id = rand(1..4)
+        item.status_id = rand(1..6)
         item.save!
         # for each item, possibly add photos
         for i in 0..rand(0..3)
@@ -73,8 +74,8 @@ namespace :db do
         item_tag.save!
     end
     # Fake Status
-    for i in 0..3
-        status_types = ["available", "featured", "sold", "missing"]
+    for i in 0..5
+        status_types = ["available", "featured", "sold", "missing", "paid", "picked up"]
         status = Status.new
         status.status_type = status_types[i]
         status.description = Faker::Lorem.sentence
