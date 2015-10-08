@@ -39,5 +39,6 @@ group :development, :test do
   gem 'byebug'
   gem 'populator3'
   gem 'faker'
+  gem 'rails-erd'
 end
 
