@@ -10,14 +10,13 @@ class BidTest < ActiveSupport::TestCase
   should validate_presence_of(:amount)
 
   # Ticket should be a unique number
-  should validate_uniqueness_of(:ticket_num)
   should validate_numericality_of(:ticket_num)
-  should allow_value("1630").for(:number)
-  should allow_value("1776").for(:number)
-  should allow_value("2013").for(:number)
-  should allow_value("2525").for(:number)
-  should_not allow_value("bad").for(:number)
-  should_not allow_value("1630.5").for(:number)
+  should allow_value("1630").for(:ticket_num)
+  should allow_value("1776").for(:ticket_num)
+  should allow_value("2013").for(:ticket_num)
+  should allow_value("2525").for(:ticket_num)
+  should_not allow_value("bad").for(:ticket_num)
+  should_not allow_value("1630.5").for(:ticket_num)
   # Test boundaries?
   # should_not allow_value("1599").for(:number)
   # should_not allow_value("2600").for(:number)
@@ -39,15 +38,38 @@ class BidTest < ActiveSupport::TestCase
   should_not allow_value(2).for(:bid_time)
   should_not allow_value(3.14159).for(:bid_time)
 
-  context "Creating participants and them in the bowling queue, " do
+  context "Bids" do
     setup do
+      create_statuses
+      create_items
+      create_bids
     end
 
     teardown do
+      delete_bids
+      delete_items
+      delete_statuses
     end
 
-    should "not allow a new bid for less than current bid plus min_bid" do
-      # bad_bid = FactoryGirl.build(:bid, ticket_number: )
+    should "not allow a new bid for less than starting_price" do
+      bad_bid = FactoryGirl.build(:bid, ticket_num: 5, item: @item3, amount: 39, bid_time: DateTime.now)
+      deny bad_bid.valid?
+    end
+
+    should "not allow bids that are less than current_price + min_increment" do
+      bad_bid1 = FactoryGirl.build(:bid, ticket_num: 5, item: @item1, amount: 249, bid_time: DateTime.now)
+      bad_bid2 = FactoryGirl.build(:bid, ticket_num: 5, item: @item1, amount: 250, bid_time: DateTime.now)
+      bad_bid3 = FactoryGirl.build(:bid, ticket_num: 5, item: @item1, amount: 269, bid_time: DateTime.now)
+      deny bad_bid1.valid?
+      deny bad_bid2.valid?
+      deny bad_bid3.valid?
+    end
+
+    should "allow bids that are greater than current_price + min_increment"
+      bid1 = FactoryGirl.build(:bid, ticket_num: 5, item: @item1, amount: 270, bid_time: DateTime.now)
+      bid2 = FactoryGirl.build(:bid, ticket_num: 5, item: @item1, amount: 300, bid_time: DateTime.now)
+      assert bid1.valid?
+      assert bid2.valid?
     end
   end
 end
