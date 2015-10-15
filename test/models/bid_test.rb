@@ -82,5 +82,9 @@ class BidTest < ActiveSupport::TestCase
       deny bad_bid3.valid?
       deny bad_bid4.valid?
     end
+
+    should "have a scope for the current best bid for a particular item" do
+      assert_equal Bid.current_bid(@item1), @bid1b
+    end
   end
 end
