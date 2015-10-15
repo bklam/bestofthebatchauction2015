@@ -16,3 +16,5 @@ begin
 rescue Twilio::REST::RequestError => e
   puts e.message
 end
+
+# TODO check out guide here https://www.twilio.com/blog/2014/02/twilio-on-rails-integrating-twilio-with-your-rails-4-app.html
