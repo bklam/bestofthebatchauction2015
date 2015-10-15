@@ -19,9 +19,21 @@ module Contexts
         current_price: 80,
         min_increment: 10,
         status_id: 0)
+      @item3 = FactoryGirl.create(:item,
+        name: "Gift Basket",
+        description: "An assortment of neat doodads bundled together",
+        donated_by: "Your Local Business",
+        value: 40,
+        starting_price: 40,
+        current_price: 40,
+        min_increment: 5,
+        status_id: 0)
     end
 
     def delete_items
+      @item1.delete
+      @item2.delete
+      @item3.delete
     end
   end
 end
