@@ -65,11 +65,22 @@ class BidTest < ActiveSupport::TestCase
       deny bad_bid3.valid?
     end
 
-    should "allow bids that are greater than current_price + min_increment"
+    should "allow bids that are greater than current_price + min_increment" do
       bid1 = FactoryGirl.build(:bid, ticket_num: 5, item: @item1, amount: 270, bid_time: DateTime.now)
       bid2 = FactoryGirl.build(:bid, ticket_num: 5, item: @item1, amount: 300, bid_time: DateTime.now)
       assert bid1.valid?
       assert bid2.valid?
+    end
+
+    should "not allow bids for an item that is not for sale" do
+      bad_bid1 = FactoryGirl.build(:bid, ticket_num: 5, item: @item1_picked_up, amount; 270, bid_time: DateTime.now)
+      bad_bid2 = FactoryGirl.build(:bid, ticket_num: 5, item: @item1_missing, amount; 270, bid_time: DateTime.now)
+      bad_bid3 = FactoryGirl.build(:bid, ticket_num: 5, item: @item2_paid, amount; 150, bid_time: DateTime.now)
+      bad_bid4 = FactoryGirl.build(:bid, ticket_num: 5, item: @item3_sold, amount; 100, bid_time: DateTime.now)
+      deny bad_bid1.valid?
+      deny bad_bid2.valid?
+      deny bad_bid3.valid?
+      deny bad_bid4.valid?
     end
   end
 end
